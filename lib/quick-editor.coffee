@@ -64,14 +64,14 @@ module.exports = QuickEditor =
 
   findFilesFromCSSIdentifier:(identifier) ->
     @searcher.findFilesThatContain identifier
-    .then () => @searcher.getSelectorText().then ([found, result]) =>
+    .then () => (@searcher.getSelectorText().then ([found, result]) =>
         @found = found
         @searcher.clear()
         if found
           path = atom.workspace.getActiveTextEditor().getPath()
           @cssCache.put(path, result.file.getPath())
         return [found, result]
-    .catch (e) ->
+    ).catch (e) ->
       console.error(e.message, e.stack)
 
   parseSelectedCSSSelector: ->
